@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Farming Records</title>
+
+  <!-- Bootstrap 5.3 + Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    body { background: linear-gradient(135deg, #e8f5e8, #c8e6c9); min-height: 100vh; padding: 20px 0; font-family: 'Segoe UI', sans-serif; }
+    .card { box-shadow: 0 15px 35px rgba(0,0,0,0.15); border: none; border-radius: 20px; overflow: hidden; }
+    .card-header { background: linear-gradient(90deg, #2e7d32, #40a343); color: white; padding: 2rem; text-align: center; }
+    .form-section { background: #f8fff8; padding: 30px; border-radius: 15px; margin-bottom: 30px; border-left: 6px solid #66bb6a; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+    h3 { color: #1b5e20; border-bottom: 4px solid #81c784; padding-bottom: 10px; font-weight: 600; }
+    .thank-you{ background: #66bb6a; padding: 5px; border-radius: 10px;color: white;}
+    @keyframes slide { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+    @media print {
+      body * { visibility: hidden; }
+      .card, .card * { visibility: visible; }
+      .card { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; background: white !important; }
+      .no-print, .thank-you { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container my-4">
+  <div class="card">
+    <div class="card-header">
+      <h1 class="mb-0"><i class="bi bi-tree-fill me-3"></i>FARMING DETAILS RECORD</h1>
+      <p class="mb-0 mt-2">Complete Offline Farm Management System</p>
+    </div>
+
+    <div class="card-body p-5">
+      <form id="farmingForm">
+
+        <!-- 1. Farming Work Details -->
+        <div class="form-section">
+          <h3>Farming Work Details</h3>
+          <div class="row g-4">
+            <div class="col-md-6"><label class="form-label fw-bold">Enter Farmer Name</label><input type="text" class="form-control" id="farmerName" required></div>
+            <div class="col-md-6"><label class="form-label fw-bold">Enter Date</label><input type="date" class="form-control" id="workDate" required></div>
+            <div class="col-md-6"><label class="form-label fw-bold">Enter Land Location</label><textarea class="form-control" rows="2" id="landLocation"></textarea></div>
+            <div class="col-md-6"><label class="form-label fw-bold">Total Land Area</label><input type="text" class="form-control" id="totalLandArea"></div>
+          </div>
+        </div>
+
+        <!-- 2. Seed Selection -->
+        <div class="form-section">
+          <h3>Seed Selection</h3>
+          <div class="row g-4">
+            <div class="col-md-4"><label>Types of Seeds</label><input type="text" class="form-control" id="seedTypes"></div>
+            <div class="col-md-4"><label>Total Seeds Required</label><input type="text" class="form-control" id="totalSeedsReq"></div>
+            <div class="col-md-4"><label>Seeds Bags Size</label><input type="number" class="form-control" id="bagSize"></div>
+            <div class="col-md-4"><label>Cost per Bag</label><input type="number" class="form-control" id="costPerBag"></div>
+            <div class="col-md-4"><label>Total Bags Purchased</label><input type="number" class="form-control" id="totalBagsPurchased"></div>
+            <div class="col-md-4"><label>Cost of Seeds</label><input type="number" class="form-control" id="totalSeedCost"></div>
+            <div class="col-md-4"><label>Date of Purchased</label><input type="date" class="form-control" id="seedPurchaseDate"></div>
+            <div class="col-md-4"><label>Supplier Name</label><input type="text" class="form-control" id="supplierName"></div>
+            <div class="col-md-4"><label>Supplier Mobile Number</label><input type="tel" class="form-control" id="supplierMobile"></div>
+            <div class="col-12"><label>Remarks</label><textarea class="form-control" rows="2" id="seedRemarks"></textarea></div>
+          </div>
+        </div>
+
+        <!-- 3. Ploughing Details -->
+        <div class="form-section">
+          <h3>Ploughing Details</h3>
+          <div class="row g-4">
+            <div class="col-md-4"><label>Ploughing Rounds</label><input type="number" class="form-control" id="ploughingRounds"></div>
+            <div class="col-md-8"><label>Rounds of Ploughing Dates</label>
+              <div class="row g-2">
+                <div class="col"><input type="date" class="form-control" id="ploughDate1"></div>
+                <div class="col"><input type="date" class="form-control" id="ploughDate2"></div>
+                <div class="col"><input type="date" class="form-control" id="ploughDate3"></div>
+              </div>
+            </div>
+            <div class="col-md-6"><label>Cost Per Ploughing</label><input type="number" class="form-control" id="costPerPlough"></div>
+            <div class="col-md-6"><label>Total Cost For Ploughing</label><input type="number" class="form-control" id="totalPloughCost"></div>
+            <div class="col-md-6"><label>Tractor Driver Name</label><input type="text" class="form-control" id="driverName"></div>
+            <div class="col-md-6"><label>Driver Phone No</label><input type="tel" class="form-control" id="driverPhone"></div>
+          </div>
+        </div>
+
+        <!-- 4. Planting Details -->
+        <div class="form-section">
+          <h3>Planting Details</h3>
+          <div class="row g-4">
+            <div class="col-md-4"><label>Seed Dipped Date</label><input type="date" class="form-control" id="seedDipDate"></div>
+            <div class="col-md-4"><label>Chemical Used Name</label><input type="text" class="form-control" id="chemicalName"></div>
+            <div class="col-md-4"><label>Chemical Cost</label><input type="number" class="form-control" id="chemicalCost"></div>
+            <div class="col-md-4"><label>Seed Spreading Date</label><input type="date" class="form-control" id="spreadingDate"></div>
+            <div class="col-md-4"><label>Duration For Planting</label><input type="number" class="form-control" id="plantingDuration"></div>
+            <div class="col-md-4"><label>Planting Date</label><input type="date" class="form-control" id="actualPlantingDate"></div>
+            <div class="col-md-6"><label>Planting in Acres</label><input type="number" step="0.01" class="form-control" id="plantedAcres"></div>
+            <div class="col-md-6"><label>Planting Location</label><textarea class="form-control" rows="2" id="plantingLocation"></textarea></div>
+          </div>
+        </div>
+
+        <!-- 5. Fertilizers & Pesticides -->
+        <div class="form-section">
+          <h3>Fertilizers and Pesticides Details</h3>
+          <div class="row g-4">
+            <div class="col-md-6"><label>Fertilizers Name</label><input type="text" class="form-control" id="fertilizerName"></div>
+            <div class="col-md-6"><label>Fertilizers Cost</label><input type="number" class="form-control" id="fertilizerCost"></div>
+            <div class="col-md-4"><label>Spreading Date</label><input type="date" class="form-control" id="fertSpreadDate"></div>
+            <div class="col-md-4"><label>How many times of Spreading</label><input type="number" class="form-control" id="fertTimes"></div>
+            <div class="col-md-4"><label>Total Fertilizers Bags</label><input type="number" class="form-control" id="totalFertBags"></div>
+            <div class="col-md-6"><label>Total Cost of bags</label><input type="number" class="form-control" id="totalFertBagCost"></div>
+            <div class="col-md-6"><label>Payment Details</label><textarea class="form-control" rows="2" id="fertPayment"></textarea></div>
+
+            <div class="col-12 mt-4 border-top pt-3"><h5>Pesticides</h5></div>
+            <div class="col-md-6"><label>Pesticides Name</label><input type="text" class="form-control" id="pesticideName"></div>
+            <div class="col-md-6"><label>Pesticides Cost</label><input type="number" class="form-control" id="pesticideCost"></div>
+            <div class="col-md-4"><label>Spreading Date</label><input type="date" class="form-control" id="pestSpreadDate"></div>
+            <div class="col-md-4"><label>How many times of Spreading</label><input type="number" class="form-control" id="pestTimes"></div>
+            <div class="col-md-4"><label>Total Pesticides Bags</label><input type="number" class="form-control" id="totalPestBags"></div>
+            <div class="col-md-6"><label>Total Cost of bags</label><input type="number" class="form-control" id="totalPestBagCost"></div>
+            <div class="col-md-6"><label>Payment Details</label><textarea class="form-control" rows="2" id="pestPayment"></textarea></div>
+            <div class="col-12"><label>Total Pesticides Usage</label><input type="text" class="form-control" id="totalPestUsage"></div>
+          </div>
+        </div>
+
+        <!-- 6. Water Management -->
+        <div class="form-section">
+          <h3>Water Management</h3>
+          <div class="row g-4">
+            <div class="col-md-4"><label>Water Schedule Date and time</label><input type="datetime-local" class="form-control" id="waterSchedule"></div>
+            <div class="col-md-4"><label>How many times of water scheduled</label><input type="number" class="form-control" id="waterTimes"></div>
+            <div class="col-md-4"><label>End of the water scheduled date</label><input type="date" class="form-control" id="waterEndDate"></div>
+          </div>
+        </div>
+
+        <!-- 7. Labours Details -->
+        <div class="form-section">
+          <h3>Labours Details</h3>
+          <div class="row g-4">
+            <div class="col-md-4"><label>Total Labours used for spreading</label><input type="number" class="form-control" id="spreadLabours"></div>
+            <div class="col-md-4"><label>Cost of Labours</label><input type="number" class="form-control" id="spreadLabourCost"></div>
+            <div class="col-md-4"><label>Spreading date</label><input type="date" class="form-control" id="spreadDate"></div>
+            <div class="col-12"><label>Spreading labours name and number</label><textarea class="form-control" rows="3" id="spreadLabourNames"></textarea></div>
+
+            <div class="col-md-4"><label>How many planting labours are used</label><input type="number" class="form-control" id="plantLabours"></div>
+            <div class="col-md-4"><label>Labours Cost</label><input type="number" class="form-control" id="plantLabourCost"></div>
+            <div class="col-md-4"><label>Planting date</label><input type="date" class="form-control" id="plantLabourDate"></div>
+            <div class="col-12"><label>Labour name and phone number (Planting)</label><textarea class="form-control" rows="3" id="plantLabourNames"></textarea></div>
+          </div>
+        </div>
+
+        <!-- 8. Harvesting Details -->
+        <div class="form-section">
+          <h3>Harvesting Details</h3>
+          <div class="row g-4">
+            <div class="col-md-4"><label>Harvesting Date</label><input type="date" class="form-control" id="harvestDate"></div>
+            <div class="col-md-4"><label>Harvesting Cost</label><input type="number" class="form-control" id="harvestCost"></div>
+            <div class="col-md-4"><label>How many hours of working</label><input type="number" class="form-control" id="harvestHours"></div>
+            <div class="col-md-6"><label>Total cost of Harvesting machine</label><input type="number" class="form-control" id="machineCost"></div>
+            <div class="col-md-6"><label>Harvestor Owner Details</label><input type="text" class="form-control" id="harvesterOwner"></div>
+          </div>
+        </div>
+
+        <!-- 9. Marketing -->
+        <div class="form-section">
+          <h3>Marketing</h3>
+          <div class="row g-4">
+            <div class="col-md-4"><label>How many days to dry the seeds</label><input type="number" class="form-control" id="dryDays"></div>
+            <div class="col-md-4"><label>Labours used for dry the crop</label><input type="number" class="form-control" id="dryLabours"></div>
+            <div class="col-md-4"><label>Cost of labours</label><input type="number" class="form-control" id="dryLabourCost"></div>
+            <div class="col-md-4"><label>How many bags filled for crops</label><input type="number" class="form-control" id="filledBags"></div>
+            <div class="col-md-4"><label>Total cost of bags</label><input type="number" class="form-control" id="bagCostTotal"></div>
+            <div class="col-md-4"><label>Date of filling</label><input type="date" class="form-control" id="fillingDate"></div>
+            <div class="col-md-6"><label>Cost of van</label><input type="number" class="form-control" id="vanCost"></div>
+          </div>
+        </div>
+
+        <!-- 10. Total Expenditure -->
+        <div class="form-section bg-warning bg-opacity-10">
+          <h3>Total Expenditure Details</h3>
+          <div class="row g-4">
+            <div class="col-md-6"><label>Total cost of Ploughing</label><input type="number" class="form-control" id="finalPloughCost"></div>
+            <div class="col-md-6"><label>Total seeds bags cost</label><input type="number" class="form-control" id="finalSeedCost"></div>
+            <div class="col-md-6"><label>Total labours cost</label><input type="number" class="form-control" id="finalLabourCost"></div>
+            <div class="col-md-6"><label>Total Fertilizers and Pesticides cost</label><input type="number" class="form-control" id="finalChemCost"></div>
+            <div class="col-md-6"><label>Total Harvesting cost</label><input type="number" class="form-control" id="finalHarvestCost"></div>
+            <div class="col-md-6"><label>Total Marketing Cost</label><input type="number" class="form-control" id="finalMarketingCost"></div>
+            <div class="col-md-6"><label class="text-danger fw-bold">Total Expenditure cost</label><input type="number" class="form-control fw-bold text-danger" id="grandTotal"></div>
+            <div class="col-md-6"><label>End of the date of working</label><input type="date" class="form-control" id="endDate"></div>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="text-center my-5 no-print">
+          <button type="button" onclick="saveData()" class="btn btn-success btn-lg mx-3 shadow">
+            Save Record (Saved in Browser)
+          </button>
+          <button type="button" onclick="window.print()" class="btn btn-primary btn-lg mx-3 shadow">
+            Print Record
+          </button>
+          <button type="button" onclick="resetForm()" class="btn btn-danger btn-lg mx-3 shadow">
+            Clear All Data
+          </button>
+        </div>
+
+        <div class="alert alert-success text-center no-print" id="saveAlert" style="display:none;">
+          All data saved successfully in your browser!
+        </div>
+
+      </form>
+
+      <div class="thank-you text-center no-print">
+        THANK YOU FARMER! Your hard work feeds the world
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript: Save, Load, Reset -->
+<script>
+window.onload = function() { loadData(); };
+
+function saveData() {
+  const form = document.getElementById('farmingForm');
+  const data = {};
+  form.querySelectorAll('input, textarea').forEach(field => {
+    data[field.id] = field.value;
+  });
+  localStorage.setItem('farmingRecord_2025', JSON.stringify(data));
+  document.getElementById('saveAlert').style.display = 'block';
+  setTimeout(() => document.getElementById('saveAlert').style.display = 'none', 4000);
+}
+
+function loadData() {
+  const saved = localStorage.getItem('farmingRecord_2025');
+  if (saved) {
+    const data = JSON.parse(saved);
+    Object.keys(data).forEach(key => {
+      const field = document.getElementById(key);
+      if (field) field.value = data[key];
+    });
+  }
+}
+
+function resetForm() {
+  if (confirm('Delete ALL saved data permanently?')) {
+    document.getElementById('farmingForm').reset();
+    localStorage.removeItem('farmingRecord_2025');
+  }
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
