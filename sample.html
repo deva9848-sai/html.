@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMS Pro - Employee Management System</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .login-card, .register-card { max-width: 420px; margin: 100px auto; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .brand-logo { font-size: 48px; color: #667eea; }
+        .sidebar { height: 100vh; background-color: #343a40; position: fixed; width: 250px; top: 0; left: 0; }
+        .sidebar .nav-link { color: #adb5bd; }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active { background-color: #495057; color: white; }
+        .main-content { margin-left: 250px; padding: 20px; background-color: #f4f6f9; min-height: 100vh; }
+        .chat-box { height: 400px; overflow-y: scroll; background-color: #f8f9fa; padding: 15px; border-radius: 10px; }
+        .chat-message { margin-bottom: 12px; padding: 10px 15px; border-radius: 20px; max-width: 80%; word-wrap: break-word; }
+        .chat-message.sent { background-color: #007bff; color: white; margin-left: auto; }
+        .chat-message.received { background-color: #e9ecef; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="loginPage" class="container">
+    <div class="card login-card">
+        <div class="card-body p-5 text-center">
+            <div class="brand-logo mb-4"><i class="bi bi-building"></i></div>
+            <h3 class="mb-3">EMS Pro</h3>
+            <p class="text-muted">Sign in to your account</p>
+
+            <form id="loginForm">
+                <div class="mb-3 text-start">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control form-control-lg" id="loginEmail" value="john@example.com" required>
+                </div>
+                <div class="mb-3 text-start">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control form-control-lg" id="loginPassword" value="123456" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100">Login</button>
+            </form>
+
+            <p class="text-muted mt-3">
+                Don't have an account? <a href="#" id="showRegister">Register</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- REGISTER PAGE -->
+<div id="registerPage" class="container hidden">
+    <div class="card register-card">
+        <div class="card-body p-5">
+            <h3 class="text-center mb-4">Create Account</h3>
+            <form id="registerForm">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Employee ID</label>
+                        <input type="text" class="form-control" value="EMP" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label>Email</label>
+                    <input type="email" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label>Phone</label>
+                    <input type="text" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label>Password</label>
+                    <input type="password" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label>Department</label>
+                    <select class="form-select">
+                        <option>Engineering</option>
+                        <option>HR</option>
+                        <option>Marketing</option>
+                        <option>Design</option>
+                    </select>
+                </div>
+                <button class="btn btn-success w-100">Register</button>
+            </form>
+
+            <p class="text-center mt-3">
+                <a href="#" id="showLogin">Already have an account? Login</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- DASHBOARD APP -->
+<div id="dashboardApp" class="hidden">
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar p-3">
+        <h4 class="text-center text-white">EMS Pro</h4>
+
+        <div class="text-center">
+            <img src="https://via.placeholder.com/80" class="rounded-circle" alt="">
+            <p class="mt-2 mb-0">John Doe</p>
+            <small>Full-Stack Developer</small>
+        </div>
+
+        <hr class="bg-light">
+
+        <ul class="nav flex-column">
+            <li><a class="nav-link active" data-page="dashboard"><i class="bi bi-house"></i> Dashboard</a></li>
+            <li><a class="nav-link" data-page="profile"><i class="bi bi-person"></i> Profile</a></li>
+            <li><a class="nav-link" data-page="domain"><i class="bi bi-code-slash"></i> Domain/Skills</a></li>
+            <li><a class="nav-link" data-page="projects"><i class="bi bi-folder"></i> Projects</a></li>
+            <li><a class="nav-link" data-page="updates"><i class="bi bi-journal-text"></i> Work Updates</a></li>
+            <li><a class="nav-link" data-page="attendance"><i class="bi bi-calendar-check"></i> Attendance</a></li>
+            <li><a class="nav-link" data-page="chat"><i class="bi bi-chat-dots"></i> Chat</a></li>
+            <li><a class="nav-link" data-page="payslip"><i class="bi bi-currency-rupee"></i> Pay Slips</a></li>
+
+            <li class="mt-4"><a id="logoutBtn" class="nav-link text-danger"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+        <!-- DASHBOARD PAGE -->
+        <div id="dashboard" class="page">
+            <h2>Welcome back, John Doe!</h2>
+            <div class="row">
+                <div class="col-md-3"><div class="card bg-primary text-white"><div class="card-body">10 Employees</div></div></div>
+                <div class="col-md-3"><div class="card bg-success text-white"><div class="card-body">8 Present</div></div></div>
+                <div class="col-md-3"><div class="card bg-warning text-white"><div class="card-body">3 Projects</div></div></div>
+                <div class="col-md-3"><div class="card bg-info text-white"><div class="card-body">₹7,20,000 Payroll</div></div></div>
+            </div>
+        </div>
+
+        <!-- PROFILE PAGE -->
+        <div id="profile" class="page" style="display:none;">
+            <h2>Employee Profile</h2>
+            <div class="card">
+                <div class="card-body row">
+                    <div class="col-md-4 text-center">
+                        <img src="https://via.placeholder.com/150" class="rounded-circle">
+                        <h5 class="mt-3">John Doe</h5>
+                        <p>Senior Full-Stack Developer</p>
+                    </div>
+                    <div class="col-md-8">
+                        <p><strong>ID:</strong> EMP001</p>
+                        <p><strong>Email:</strong> john@example.com</p>
+                        <p><strong>Phone:</strong> +91 98765 43210</p>
+                        <p><strong>Department:</strong> Engineering</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DOMAIN PAGE -->
+        <div id="domain" class="page" style="display:none;">
+        <h2>Domain & Skills</h2>
+        <div class="card">
+            <div class="card-body">
+                <h5>Primary Domain: Web Development</h5>
+                <div class="progress mb-3" style="height: 25px;">
+                    <div class="progress-bar bg-success" style="width:90%">90%</div>
+                </div>
+                <h6>Skills</h6>
+                <span class="badge bg-primary m-1">HTML/CSS</span>
+                <span class="badge bg-primary m-1">JavaScript</span>
+                <span class="badge bg-primary m-1">React</span>
+                <span class="badge bg-primary m-1">Node.js</span>
+                <span class="badge bg-primary m-1">Python</span>
+                <span class="badge bg-primary m-1">AWS</span>
+            </div>
+        </div>
+    </div>
+
+        <!-- PROJECTS PAGE -->
+        <div id="projects" class="page" style="display:none;">
+            <h2>Assigned Projects</h2>
+            <div class="row">
+                <div class="col-md-4"><div class="card p-3"><h5>E-Commerce Portal</h5><span class="badge bg-warning">In Progress</span></div></div>
+                <div class="col-md-4"><div class="card p-3"><h5>HR Management</h5><span class="badge bg-success">Completed</span></div></div>
+            </div>
+        </div>
+
+        <!-- WORK UPDATES -->
+        <div id="updates" class="page" style="display:none;">
+            <h2>Daily Work Updates</h2>
+            <textarea class="form-control mb-2" rows="3"></textarea>
+            <button class="btn btn-success">Submit</button>
+        </div>
+
+        <!-- ATTENDANCE -->
+        <div id="attendance" class="page" style="display:none;">
+            <h2>Attendance</h2>
+            <div class="card p-3">
+                <table class="table">
+                    <tr><th>Date</th><th>Status</th></tr>
+                    <tr><td>20 Nov</td><td class="text-success">Present</td></tr>
+                    <tr><td>19 Nov</td><td class="text-success">Present</td></tr>
+                    <tr><td>18 Nov</td><td class="text-danger">Absent</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- CHAT -->
+        <div id="chat" class="page" style="display:none;">
+            <h2>Team Chat</h2>
+            <div class="card p-3">
+                <div id="chatBox" class="chat-box">
+                    <div class="chat-message received">Manager: Meeting at 11 AM</div>
+                    <div class="chat-message sent">Okay!</div>
+                </div>
+
+                <div class="input-group mt-2">
+                    <input id="chatInput" class="form-control" placeholder="Type message...">
+                    <button onclick="sendMessage()" class="btn btn-primary">Send</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAYSLIP -->
+        <div id="payslip" class="page" style="display:none;">
+        <h2>Pay Slips</h2>
+        <select class="form-select mb-3 w-25">
+            <option>November 2025</option>
+            <option>October 2025</option>
+            <option>September 2025</option>
+        </select>
+        <div class="card">
+            <div class="card-body">
+                <h5>Salary Slip - November 2025</h5>
+                <table class="table">
+                    <tr><td>Gross Salary</td><td>₹85,000</td></tr>
+                    <tr><td>Basic</td><td>₹45,000</td></tr>
+                    <tr><td>HRA</td><td>₹18,000</td></tr>
+                    <tr><td>PF Deduction</td><td>₹5,400</td></tr>
+                    <tr><td>Tax</td><td>₹8,000</td></tr>
+                    <tr class="table-success"><td><strong>Net Salary</strong></td><td><strong>₹71,600</strong></td></tr>
+                </table>
+                <button class="btn btn-info text-white">Download PDF</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    // Show Register
+    showRegister.onclick = e => {
+        e.preventDefault();
+        loginPage.classList.add("hidden");
+        registerPage.classList.remove("hidden");
+    };
+
+    // Show Login
+    showLogin.onclick = e => {
+        e.preventDefault();
+        registerPage.classList.add("hidden");
+        loginPage.classList.remove("hidden");
+    };
+
+    // Login
+    loginForm.onsubmit = e => {
+        e.preventDefault();
+        if (loginEmail.value === "john@example.com" && loginPassword.value === "123456") {
+            loginPage.classList.add("hidden");
+            dashboardApp.classList.remove("hidden");
+        } else {
+            alert("Invalid credentials");
+        }
+    };
+
+    // Logout
+    logoutBtn.onclick = () => {
+        dashboardApp.classList.add("hidden");
+        loginPage.classList.remove("hidden");
+    };
+
+    // Navigation Logic
+    document.querySelectorAll(".nav-link[data-page]").forEach(link => {
+        link.onclick = function(e) {
+            e.preventDefault();
+
+            document.querySelectorAll(".nav-link").forEach(a => a.classList.remove("active"));
+            this.classList.add("active");
+
+            document.querySelectorAll(".page").forEach(p => p.style.display = "none");
+
+            let page = this.getAttribute("data-page");
+            document.getElementById(page).style.display = "block";
+        };
+    });
+
+    // Chat Send
+    function sendMessage() {
+        let input = chatInput.value.trim();
+        if (!input) return;
+
+        let msg = document.createElement("div");
+        msg.className = "chat-message sent";
+        msg.textContent = input;
+
+        chatBox.appendChild(msg);
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        chatInput.value = "";
+    }
+</script>
+
+</body>
+</html>
